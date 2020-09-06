@@ -1,33 +1,37 @@
-const cases = require('jest-in-case');
-const movieSchema = require('./movie');
+const cases = require("jest-in-case");
+const movieSchema = require("./movie");
 
 describe("Movie Schema Request", () => {
-    const validMovieData = {
-        title: "Some title",
-        description: "Some description",
-    }
+  const validMovieData = {
+    title: "Some title",
+    description: "Some description",
+  };
 
-    cases("Movie Schema Request error validation", ({overrides = {}, removeAttributes = []}) => {
-        const movieData = {
-            ...validMovieData,
-            ...overrides
-        }
+  cases(
+    "Movie Schema Request error validation",
+    ({ overrides = {}, removeAttributes = [] }) => {
+      const movieData = {
+        ...validMovieData,
+        ...overrides,
+      };
 
-        removeAttributes.forEach((attribute) => {
-            delete movieData[attribute]
-        })
+      removeAttributes.forEach((attribute) => {
+        delete movieData[attribute];
+      });
 
-        const {error} = movieSchema.validate(movieData);
-        expect(error).toBeTruthy();
-    }, [
-        {name: "without description", removeAttributes: ['description']},
-        {name: "without title", removeAttributes: ['title']},
-        {name: "with an invalid title", overrides: {title: 321}},
-        {name: "with an invalid title", overrides: {description: 321}}
-    ])
+      const { error } = movieSchema.validate(movieData);
+      expect(error).toBeTruthy();
+    },
+    [
+      { name: "without description", removeAttributes: ["description"] },
+      { name: "without title", removeAttributes: ["title"] },
+      { name: "with an invalid title", overrides: { title: 321 } },
+      { name: "with an invalid title", overrides: { description: 321 } },
+    ]
+  );
 
-    test("valid schema", () => {
-        const {error} = movieSchema.validate(validMovieData);
-        expect(error).toBeFalsy();
-    })
+  test("valid schema", () => {
+    const { error } = movieSchema.validate(validMovieData);
+    expect(error).toBeFalsy();
+  });
 });

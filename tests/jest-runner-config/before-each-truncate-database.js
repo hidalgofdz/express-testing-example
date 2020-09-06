@@ -1,5 +1,5 @@
-const {truncate } = require('../db-utils');
+const { truncate } = require("../db-utils");
 
 beforeEach(async () => {
-  await truncate()
-})
+  await truncate();
+});
