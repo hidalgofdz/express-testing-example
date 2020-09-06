@@ -11,6 +11,8 @@
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "express": "~4.16.1",
+    "http-status-codes": "^2.1.2",
+    "joi": "^17.2.1",
     "morgan": "~1.9.1",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
@@ -21,6 +23,7 @@
     "faker": "^5.1.0",
     "fishery": "^1.0.1",
     "jest": "^26.4.2",
+    "jest-in-case": "^1.0.2",
     "jest-stare": "^2.2.0",
     "sequelize-cli": "^6.2.0"
   }

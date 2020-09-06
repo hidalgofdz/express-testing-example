@@ -1,16 +1,31 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const {StatusCodes} = require('http-status-codes');
+const router = express.Router();
 const {Movie} = require('../models');
-/* GET users listing. */
-router.get('/', async function (req, res, next) {
-  const movies = await Movie.findAll();
-  res.status(200).json(movies);
+const movieSchema = require('../schema-requests/movie');
+const {generateUnprocessableEntityErrors} = require('../views/error-utils');
+
+router.get('/', async function (req, res) {
+    const movies = await Movie.findAll();
+    res.status(StatusCodes.OK).json(movies);
 });
 
-router.post('/', async function (req, res, next) {
-  const {title, description} = req.body;
-  const newMovie = await Movie.create({title, description});
-  res.status(201).json(newMovie);
+router.post('/', async function (req, res) {
+    const {title, description} = req.body;
+    const {error, value} = movieSchema.validate({
+        title, description
+    })
+
+    if (error) {
+        const errors = generateUnprocessableEntityErrors(error.details)
+        res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
+            errors,
+        })
+        return
+    }
+
+    const newMovie = await Movie.create(value);
+    res.status(StatusCodes.CREATED).json(newMovie);
 });
 
 module.exports = router;
