@@ -4,9 +4,8 @@ const http = require("http");
 
 async function startServer({ port = process.env.PORT } = {}) {
   app.set("port", port);
-  const server = http.createServer(app);
   return new Promise((resolve) => {
-    server.listen(port);
+    const server = http.createServer(app).listen(port);
     server.on("listening", () => {
       debug(`Listening on port ${server.address().port}`);
       const originalClose = server.close.bind(server);

@@ -1,3 +1,5 @@
+const { StatusCodes } = require("http-status-codes");
+
 function generateUnprocessableEntityErrors(errors) {
   return errors.map((validationError) => {
     return {
