@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "jest --runInBand --forceExit",
-    "create-database": "sequelize db:create"
+    "db:create": "sequelize db:create",
+    "db:migrate": "sequelize db:migrate"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

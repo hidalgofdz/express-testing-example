@@ -40,7 +40,15 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Create database
-        run: npm run create-database
+        run: npm run db:create
+        env:
+          # The hostname used to communicate with the PostgreSQL service container
+          POSTGRES_HOST: postgres
+          NODE_ENV: test
+          # The default PostgreSQL port
+          POSTGRES_PORT: 5432
+      - name: Migrate database
+        run: npm run db:migrate
         env:
           # The hostname used to communicate with the PostgreSQL service container
           POSTGRES_HOST: postgres
