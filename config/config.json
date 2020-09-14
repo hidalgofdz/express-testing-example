@@ -7,8 +7,8 @@
     "dialect": "postgres"
   },
   "test": {
-    "username": "hidalgofdz",
-    "password": null,
+    "username": "testing-user",
+    "password": "postgres",
     "database": "express-example_test",
     "host": "127.0.0.1",
     "dialect": "postgres"
