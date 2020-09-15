@@ -2,7 +2,18 @@
   "name": "express-example",
   "version": "0.0.0",
   "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,ts,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  },
   "scripts": {
+    "prettier": "prettier \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "start": "node ./bin/www",
     "test": "jest --runInBand --forceExit",
     "db:create": "sequelize db:create",
@@ -25,9 +36,11 @@
     "axios": "^0.20.0",
     "faker": "^5.1.0",
     "fishery": "^1.0.1",
+    "husky": "^4.3.0",
     "jest": "^26.4.2",
     "jest-in-case": "^1.0.2",
     "jest-stare": "^2.2.0",
+    "lint-staged": "^10.3.0",
     "prettier": "2.1.1",
     "sequelize-cli": "^6.2.0"
   }
