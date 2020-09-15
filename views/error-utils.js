@@ -7,12 +7,19 @@ function generateUnprocessableEntityErrors(errors) {
       source: { pointer: "/" + validationError.path.join("/") },
       title: "Invalid Attribute",
       description: validationError.message,
-      code: validationError.type === "any.required" ? "required-attribute" : "invalid-attribute",
+      code:
+        validationError.type === "any.required"
+          ? "required-attribute"
+          : "invalid-attribute",
     };
   });
 }
 
-function generateModelNotFoundError(id, resourceIdentifier, status = StatusCodes.NOT_FOUND) {
+function generateModelNotFoundError(
+  id,
+  resourceIdentifier,
+  status = StatusCodes.NOT_FOUND
+) {
   return {
     status,
     code: "not-found",
