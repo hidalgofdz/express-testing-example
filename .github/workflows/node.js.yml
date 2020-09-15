@@ -8,22 +8,31 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
-
 jobs:
-  build:
+  tests:
+    env:
+      POSTGRES_USER: testing-user
+      POSTGRES_PASSWORD: postgres
+      PORT: 8080
+      HOSTNAME: http://localhost
+      # The default PostgreSQL port
+      POSTGRES_PORT: 5432
+      # The hostname used to communicate with the PostgreSQL service container
+      POSTGRES_HOST: postgres
+      NODE_ENV: test
     runs-on: ubuntu-latest
 
     services:
       postgres:
         image: postgres
-        env:
-          POSTGRES_USER: testing-user
-          POSTGRES_PASSWORD: postgres
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        env:
+          POSTGRES_USER: testing-user
+          POSTGRES_PASSWORD: postgres
         ports:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
@@ -41,27 +50,7 @@ jobs:
         run: npm install
       - name: Create database
         run: npm run db:create
-        env:
-          # The hostname used to communicate with the PostgreSQL service container
-          POSTGRES_HOST: postgres
-          NODE_ENV: test
-          # The default PostgreSQL port
-          POSTGRES_PORT: 5432
       - name: Migrate database
         run: npm run db:migrate
-        env:
-          # The hostname used to communicate with the PostgreSQL service container
-          POSTGRES_HOST: postgres
-          NODE_ENV: test
-          # The default PostgreSQL port
-          POSTGRES_PORT: 5432
       - name: Run tests
         run: npm test
-        env:
-          # The hostname used to communicate with the PostgreSQL service container
-          POSTGRES_HOST: postgres
-          # The default PostgreSQL port
-          POSTGRES_PORT: 5432
-          NODE_ENV: test
-          PORT: 8080
-          HOSTNAME: http://localhost
