@@ -1,5 +1,6 @@
 const cases = require("jest-in-case");
 const movieSchema = require("./movie");
+const { validateSchema } = require("./index");
 
 describe("Movie Schema Request", () => {
   const validMovieData = {
@@ -19,7 +20,7 @@ describe("Movie Schema Request", () => {
         delete movieData[attribute];
       });
 
-      const { error } = movieSchema.validate(movieData);
+      const { error } = validateSchema(movieSchema, movieData);
       expect(error).toBeTruthy();
     },
     [
@@ -31,7 +32,7 @@ describe("Movie Schema Request", () => {
   );
 
   test("valid schema", () => {
-    const { error } = movieSchema.validate(validMovieData);
+    const { error } = validateSchema(movieSchema, validMovieData);
     expect(error).toBeFalsy();
   });
 });
