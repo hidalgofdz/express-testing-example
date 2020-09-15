@@ -37,7 +37,7 @@ describe("POST /movies", () => {
       errors: [
         {
           source: { pointer: "/description" },
-          code: "001",
+          code: "required-attribute",
           title: "Invalid Attribute",
           description: '"description" is required',
           status: 422,

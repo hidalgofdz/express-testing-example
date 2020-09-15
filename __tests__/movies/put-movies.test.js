@@ -3,7 +3,7 @@ const { StatusCodes } = require("http-status-codes");
 const MovieFactory = require("../../factories/movies");
 const { Movie } = require("../../models");
 
-describe("PUT /movies", () => {
+describe("PUT /movies/:id", () => {
   test("Success", async () => {
     // Given
     const { testClient } = await setup();
