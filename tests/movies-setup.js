@@ -1,9 +1,3 @@
-const { getTestClient } = require("./request-client-utils");
-
-async function setup() {
-  return { testClient: getTestClient() };
-}
-
 function getMovieResponseSchema(overrides = {}) {
   return {
     id: expect.any(Number),
@@ -15,4 +9,4 @@ function getMovieResponseSchema(overrides = {}) {
   };
 }
 
-module.exports = { setup, getMovieResponseSchema };
+module.exports = { getMovieResponseSchema };

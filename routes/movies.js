@@ -36,7 +36,9 @@ router.put("/:id", async function (req, res) {
   const movie = await Movie.findByPk(id);
 
   if (movie === null) {
-    return res.status(StatusCodes.NOT_FOUND);
+    return res.status(StatusCodes.NOT_FOUND).json({
+      errors: [generateModelNotFoundError(id, req.originalUrl)],
+    });
   }
 
   const { error, value } = validateSchema(movieSchema, req.body);

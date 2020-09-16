@@ -1,23 +1,23 @@
-const { setup, getMovieResponseSchema } = require("../../tests/movies-setup");
-const { resolve } = require("../../tests/request-client-utils");
+const { getMovieResponseSchema } = require("../../tests/movies-setup");
 const { StatusCodes } = require("http-status-codes");
 const MovieFactory = require("../../factories/movies");
 const { Movie } = require("../../models");
+const request = require("supertest");
+const app = require("../../app");
 
 describe("GET /movies/:id", () => {
   test("Success", async () => {
     // Given
-    const { testClient } = await setup();
     const movieData = MovieFactory.build({
       title: "Some movie",
       description: "Some description",
     });
     const movie = await Movie.create(movieData);
     // When
-    const response = await testClient.get(`/movies/${movie.id}`);
+    const response = await request(app).get(`/movies/${movie.id}`);
     // Then
     expect(response.status).toBe(StatusCodes.OK);
-    expect(response.data).toStrictEqual(
+    expect(response.body).toStrictEqual(
       getMovieResponseSchema({
         title: "Some movie",
         description: "Some description",
@@ -27,12 +27,11 @@ describe("GET /movies/:id", () => {
 
   test("Not Found", async () => {
     // Given
-    const { testClient } = await setup();
     // When
-    const response = await testClient.get("/movies/12").catch(resolve);
+    const response = await request(app).get(`/movies/12`);
     // Then
     expect(response.status).toBe(StatusCodes.NOT_FOUND);
-    expect(response.data).toStrictEqual({
+    expect(response.body).toStrictEqual({
       errors: [
         {
           status: StatusCodes.NOT_FOUND,

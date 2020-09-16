@@ -15,7 +15,7 @@
   "scripts": {
     "prettier": "prettier \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "start": "node ./bin/www",
-    "test": "jest --runInBand --forceExit",
+    "test": "jest --runInBand --coverage",
     "db:create": "sequelize db:create",
     "db:migrate": "sequelize db:migrate"
   },
@@ -42,6 +42,7 @@
     "jest-stare": "^2.2.0",
     "lint-staged": "^10.3.0",
     "prettier": "2.1.1",
-    "sequelize-cli": "^6.2.0"
+    "sequelize-cli": "^6.2.0",
+    "supertest": "^4.0.2"
   }
 }

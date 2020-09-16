@@ -1,19 +1,20 @@
-const { setup, getMovieResponseSchema } = require("../../tests/movies-setup");
-const { resolve } = require("../../tests/request-client-utils");
+const { getMovieResponseSchema } = require("../../tests/movies-setup");
 const { StatusCodes } = require("http-status-codes");
+const request = require("supertest");
+const app = require("../../app");
+
 describe("POST /movies", () => {
   test("Success", async () => {
     // Given
-    const { testClient } = await setup();
     const movieData = {
       title: "Some movie",
       description: "Some description",
     };
     // When
-    const response = await testClient.post("/movies", movieData);
+    const response = await request(app).post("/movies").send(movieData);
     // Then
     expect(response.status).toBe(StatusCodes.CREATED);
-    expect(response.data).toStrictEqual(
+    expect(response.body).toStrictEqual(
       getMovieResponseSchema({
         title: "Some movie",
         description: "Some description",
@@ -22,18 +23,16 @@ describe("POST /movies", () => {
   });
 
   test("Unprocessable Entity", async () => {
-    // Setup
-    const { testClient } = await setup();
     // Given
-    const movieData = {
+    const invalidMovieData = {
       title: "Some movie",
       // no description is passed
     };
     // When
-    const response = await testClient.post("/movies", movieData).catch(resolve);
+    const response = await request(app).post("/movies").send(invalidMovieData);
     // Then
     expect(response.status).toBe(StatusCodes.UNPROCESSABLE_ENTITY);
-    expect(response.data).toStrictEqual({
+    expect(response.body).toStrictEqual({
       errors: [
         {
           source: { pointer: "/description" },

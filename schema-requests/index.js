@@ -1,5 +1,10 @@
 function validateSchema(schema, values, options = {}) {
-  const defaultOptions = { allowUnknown: true, stripUnknown: true, ...options };
+  const defaultOptions = {
+    abortEarly: false,
+    allowUnknown: true,
+    stripUnknown: true,
+    ...options,
+  };
   return schema.validate(values, defaultOptions);
 }
 

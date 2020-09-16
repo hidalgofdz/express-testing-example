@@ -27,7 +27,7 @@ describe("Movie Schema Request", () => {
       { name: "without description", removeAttributes: ["description"] },
       { name: "without title", removeAttributes: ["title"] },
       { name: "with an invalid title", overrides: { title: 321 } },
-      { name: "with an invalid title", overrides: { description: 321 } },
+      { name: "with an invalid description", overrides: { description: 321 } },
     ]
   );
 
