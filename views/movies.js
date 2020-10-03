@@ -5,8 +5,8 @@ function serialize(movie) {
     id,
     title,
     description,
-    createdAt,
-    updatedAt,
+    // createdAt,
+    // updatedAt,
   };
 }
 

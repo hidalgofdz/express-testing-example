@@ -1,13 +1,16 @@
 const express = require("express");
 const { StatusCodes } = require("http-status-codes");
 const router = express.Router();
-const { Movie } = require("../models");
+const { Movie, NewsletterSubscription } = require("../models");
 const movieSchema = require("../schema-requests/movie");
 const {
   generateModelNotFoundError,
   generateUnprocessableEntityErrors,
 } = require("../views/error-utils");
 const serializeMovie = require("../views/movies");
+const {
+  sendNewMovieEmail,
+} = require("../services/newsletter-notifier-service");
 const { validateSchema } = require("../schema-requests");
 
 router.get("/", async function (req, res) {
@@ -28,6 +31,14 @@ router.post("/", async function (req, res) {
   }
 
   const newMovie = await Movie.create(value);
+
+  try {
+    const subscriptions = await NewsletterSubscription.findAll();
+    await sendNewMovieEmail(subscriptions, newMovie);
+  } catch (error) {
+    // report error in some way but do not cancel response
+  }
+
   res.status(StatusCodes.CREATED).json(serializeMovie(newMovie));
 });
 
