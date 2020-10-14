@@ -3,27 +3,30 @@ const app = require("../../app");
 const NewsletterSubscriptionFactory = require("../../factories/newslettersubscriptions");
 const { StatusCodes } = require("http-status-codes");
 const { NewsletterSubscription } = require("../../models");
-describe("POST /movies", () => {
-  test("success", async () => {
-    // Given
-    const subscription = NewsletterSubscriptionFactory.build();
-    await NewsletterSubscription.create(subscription);
-    // create a user subscription
-    const movieData = {
-      title: "some title",
-      description: "some description",
-    };
-    // When
-    const response = await request(app).post("/movies").send(movieData);
-    // Then
-    expect(response.status).toBe(StatusCodes.CREATED);
-    expect(response.body).toStrictEqual({
-      id: expect.any(Number),
-      title: "some title",
-      description: "some description",
-    });
-    // expect an email was send
-  });
+const { sendEmail } = require("../../services/email-service");
+// As an admin, I want to add a movie to the system DONE
+// As a subscribed user to the newsletter, I want to receive an email every time a new movie is added.
 
-  test("Unprocessable entity", async () => {});
-});
+// MODELS
+// Subscription
+//  - email: string
+//  - active: bool
+// Movie
+//  - name: string
+//  - title: string
+
+// Services
+// Email service (./services/email-services.js)
+//   methods: sendEmail
+
+// Setup
+// Given
+// A set of preconditions
+// When
+// A request to the API is Send
+// Then
+// Validate
+//   - Http status
+//   - Response body structure
+//   - Response body attributes
+//   - Events or calls to third party services where called
